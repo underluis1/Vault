@@ -190,7 +190,6 @@ class SpotlightPanel {
 
     private var panel: NSPanel?
     private var hostingView: NSHostingView<SpotlightView>?
-    private var previousApp: NSRunningApplication?
 
     func toggle() {
         if let panel = panel, panel.isVisible {
@@ -219,6 +218,7 @@ class SpotlightPanel {
             p.isOpaque = false
             p.hasShadow = true
             p.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+            p.hidesOnDeactivate = true
             panel = p
         }
 
@@ -238,16 +238,13 @@ class SpotlightPanel {
             panel?.setFrame(NSRect(x: x, y: y, width: 620, height: 68), display: true)
         }
 
-        previousApp = NSWorkspace.shared.frontmostApplication
-
         panel?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
 
     func hide() {
         panel?.orderOut(nil)
-        previousApp?.activate()
-        previousApp = nil
+        NSApp.hide(nil)
     }
 
     func updatePanelHeight(_ height: CGFloat) {
@@ -392,9 +389,8 @@ struct SpotlightView: View {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(field.value, forType: .string)
         copiedFieldID = field.id
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             copiedFieldID = nil
-            onDismiss()
         }
     }
 
@@ -402,9 +398,6 @@ struct SpotlightView: View {
         let text = entry.fields.map { "\($0.label): \($0.value)" }.joined(separator: "\n")
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(text, forType: .string)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            onDismiss()
-        }
     }
 }
 
