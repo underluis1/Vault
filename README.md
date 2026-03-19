@@ -22,8 +22,11 @@ All your credentials stay on your Mac — no cloud, no accounts, no tracking.
 
 1. Go to [Releases](../../releases) and download the latest `Vault.app.zip`
 2. Unzip and drag **Vault.app** into your `/Applications` folder
-3. Double-click to open. macOS might show a security warning the first time:
-   - Go to **System Settings > Privacy & Security**, scroll down and click **Open Anyway**
+3. Open Terminal and run this command to remove the macOS quarantine flag:
+   ```bash
+   xattr -cr /Applications/Vault.app
+   ```
+4. Double-click to open
 4. Grant **Accessibility** permission when prompted:
    - Go to **System Settings > Privacy & Security > Accessibility**
    - Click the **+** button and add **Vault**
