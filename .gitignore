@@ -1,0 +1,13 @@
+# Swift build
+VaultSwift/.build/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

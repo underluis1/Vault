@@ -1,0 +1,3 @@
+#!/bin/bash
+PROJECT_DIR="/Users/raffaele/Desktop/Progetti/password"
+"$PROJECT_DIR/.venv/bin/python" "$PROJECT_DIR/main.py" > /tmp/vault-stdout.log 2> /tmp/vault-stderr.log
